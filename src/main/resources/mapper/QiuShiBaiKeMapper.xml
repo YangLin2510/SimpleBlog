@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lin.project.firstproject2018.mapper.QiuShiBaiKeMapper">
+    <resultMap id="qiuShiBaiKeResultMap" type="lin.project.firstproject2018.bean.QiuShiBaiKe">
+        <id property="id" column="id"></id>
+        <result property="imgUrl" column="img_url"></result>
+        <result property="imgSrc" column="img_src"></result>
+    </resultMap>
+
+
+    <select id="selectById" resultMap="qiuShiBaiKeResultMap" parameterType="integer">
+        select * from qiu_shi_bai_ke where id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lin.project.firstproject2018.mapper.BlogMapper">
+    <resultMap id="blogResultSet" type="lin.project.firstproject2018.bean.Blog">
+        <id property="id" column="ID"/>
+        <result property="blogText" column="BLOG_TEXT"></result>
+        <result property="authorUserId" column="AUTHOR_USER_ID"></result>
+        <result property="createTime" column="CREATE_TIME"></result>
+        <result property="lastUpdateTime" column="LAST_UPDATE_TIME"></result>
+        <result property="viewCount" column="VIEW_COUNT" ></result>
+        <result property="commentCount" column="COMMENT_COUNT"></result>
+        <result property="blogTagCode" column="BLOG_TAG_CODE"/>
+    </resultMap>
+    
+    <resultMap id="blogModelResultSet" type="lin.project.firstproject2018.model.BlogModel">
+        <id property="id" column="ID"/>
+        <result property="blogText" column="BLOG_TEXT"></result>
+        <result property="authorUserId" column="AUTHOR_USER_ID"></result>
+        <result property="createTime" column="CREATE_TIME"></result>
+        <result property="lastUpdateTime" column="LAST_UPDATE_TIME"></result>
+        <result property="viewCount" column="VIEW_COUNT" ></result>
+        <result property="commentCount" column="COMMENT_COUNT"></result>
+        <result property="authorUserName" column="AUTHOR_USER_NAME"/>
+        <result property="blogTypeName" column="BLOG_TAG_NAME"/>
+        <result property="blogTagCode" column="BLOG_TAG_CODE"/>
+    </resultMap>
+    <select id="getBlogById" resultMap="blogResultSet" parameterType="long">
+        select * from tb_blog where id = #{id}
+    </select>
+    
+    <select id="getBlogsWithPage" resultMap="blogResultSet">
+         select * from tb_blog where 1=1
+         <if test="queryBlog.id != null">
+              and ID = #{queryBlog}
+         </if>
+         <if test="queryBlog.authorUserId != null and queryBlog.authorUserId != ''">
+             and AUTHOR_USER_ID = #{queryBlog.authorUserId}
+         </if>
+         <if test="queryBlog.title != null and queryBlog.title != ''">
+             and TITLE like CONCAT('%','#{queryBlog.title}','%')
+         </if>
+         <if test="month !=null and month != ''">
+             and date_format(CREATE_TIME,"%Y-%m") = #{month}
+         </if>
+         ORDER BY CREATE_TIME DESC
+    </select>
+    
+    <select id="getAchiveMonthBlog" resultType="java.util.HashMap">
+        select date_format(CREATE_TIME,'%Y-%m') as month,count(*) as blog_count from tb_blog 
+        where 1=1
+        <if test="blogAuthorId !=null">
+             and AUTHOR_USER_ID = #{blogAuthorId}
+        </if>
+        group by date_format(CREATE_TIME,'%Y-%m')
+        order by date_format(CREATE_TIME,'%Y-%m') desc;
+    </select>
+    
+    <select id="getBlogCountInfo" resultType="java.util.HashMap">
+        select sum(VIEW_COUNT) view_sum,sum(COMMENT_COUNT) comment_sum,count(tb_blog.ID) blog_sum, tb_user.DISPLAY_NAME from tb_blog,tb_user where tb_blog.AUTHOR_USER_ID = tb_user.id and tb_blog.AUTHOR_USER_ID = #{authorId} group by tb_blog.AUTHOR_USER_ID
+    </select>
+    
+    <insert id="saveBlog" useGeneratedKeys="true" keyProperty="id" parameterType="lin.project.firstproject2018.bean.Blog">
+       INSERT INTO tb_blog(TITLE,BLOG_TEXT,AUTHOR_USER_ID,CREATE_TIME,LAST_UPDATE_TIME,VIEW_COUNT,COMMENT_COUNT,BLOG_TAG_CODE,BLOG_TYPE)
+       VALUES (#{title},#{blogText},#{authorUserId},#{createTime},#{lastUpdateTime},#{viewCount},#{commentCount},#{blogTagCode},#{blogType})
+    </insert>
+    
+    <select id="getRecentBlogs" resultMap="blogResultSet">
+         SELECT * FROM tb_blog 
+         WHERE 1=1
+         <if test="blogAuthorId !=null">
+            AND AUTHOR_USER_ID = #{blogAuthorId}
+         </if>
+        ORDER BY CREATE_TIME DESC LIMIT #{size}
+    </select>
+    
+    <select id="getBlogsByViewCountWithPage" resultMap="blogModelResultSet">
+        SELECT blog.*,user.DISPLAY_NAME as AUTHOR_USER_NAME, tag.TAG_NAME as BLOG_TAG_NAME FROM tb_blog blog,tb_user user,tb_blog_tag tag where user.id = blog.AUTHOR_USER_ID and blog.BLOG_TAG_CODE = tag.TAG_CODE
+        <if test="tagCode != null and tagCode != ''">
+               AND BLOG_TAG_CODE = #{tagCode}
+        </if>
+        order by VIEW_COUNT DESC
+    </select>
+    
+    <update id="updateBlog" parameterType="lin.project.firstproject2018.bean.Blog">
+       UPDATE tb_blog
+       <set> 
+       <if test="title != null and title != ''">
+           TITLE = #{title},
+       </if>
+       <if test="blogText !=null and blogText !=''">
+          BLOG_TEXT = #{blogText},     
+       </if>
+       <if test="authorUserId != null">
+          AUTHOR_USER_ID = #{authorUserId},
+       </if>
+       <if test="createTime != null">
+          CREATE_TIME = #{createTime},
+       </if>
+       <if test="lastUpdateTime != null">
+          LAST_UPDATE_TIME = #{lastUpdateTime},
+       </if>
+       <if test="viewCount != null">
+         VIEW_COUNT = #{viewCount},
+       </if>
+       <if test="commentCount != null">
+          COMMENT_COUNT = #{commentCount},
+       </if>
+       <if test="blogTagCode !=null and blogTagCode!=''">
+          BLOG_TAG_CODE = #{blogTagCode},
+       </if>
+       <if test="blogType != null and blogType != ''">
+          BLOG_TYPE = #{blogType}
+       </if>
+       </set>
+       WHERE ID = #{id}
+    </update>
+    
+</mapper>
