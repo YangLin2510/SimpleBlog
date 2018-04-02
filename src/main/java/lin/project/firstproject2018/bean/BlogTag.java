@@ -2,37 +2,37 @@ package lin.project.firstproject2018.bean;
 
 /**
  * 博客标签
- * @author Yang Lin
  *
+ * @author Yang Lin
  */
 public class BlogTag {
-	
-	private Integer id;
-	private String tagName;
-	private String tagCode;
 
-	public Integer getId() {
-		return id;
-	}
+    private Integer id;
+    private String tagName;
+    private String tagCode;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getTagName() {
-		return tagName;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setTagName(String tagName) {
-		this.tagName = tagName;
-	}
+    public String getTagName() {
+        return tagName;
+    }
 
-	public String getTagCode() {
-		return tagCode;
-	}
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
 
-	public void setTagCode(String tagCode) {
-		this.tagCode = tagCode;
-	}
+    public String getTagCode() {
+        return tagCode;
+    }
+
+    public void setTagCode(String tagCode) {
+        this.tagCode = tagCode;
+    }
 
 }

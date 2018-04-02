@@ -12,14 +12,14 @@ import com.alibaba.druid.pool.DruidDataSource;
 @SpringBootApplication
 public class App {
     public static void main(String[] args) {
-        SpringApplication.run(App.class,args);
+        SpringApplication.run(App.class, args);
     }
 
     @Autowired
-    Environment env;   
+    Environment env;
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setUrl(env.getProperty("spring.datasource.url"));
         druidDataSource.setUsername(env.getProperty("spring.datasource.username"));
@@ -27,5 +27,5 @@ public class App {
         druidDataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
         return druidDataSource;
     }
-    
+
 }

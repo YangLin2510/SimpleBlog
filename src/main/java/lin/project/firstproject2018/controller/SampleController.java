@@ -10,10 +10,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class SampleController {
     @Autowired
     QiuShiBaiKeMapper qiuShiBaiKeMapper;
+
     @RequestMapping("/gretting")
-    public ModelAndView greeting(ModelAndView modelAndView,Integer id){
+    public ModelAndView greeting(ModelAndView modelAndView, Integer id) {
         ModelAndView view = new ModelAndView("hello");
-        view.addObject("msg",qiuShiBaiKeMapper.selectById(id==null?300:id));
+        view.addObject("msg", qiuShiBaiKeMapper.selectById(id == null ? 300 : id));
         return view;
     }
 }

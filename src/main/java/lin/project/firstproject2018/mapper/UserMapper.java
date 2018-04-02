@@ -5,7 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import lin.project.firstproject2018.bean.User;
 
 @Mapper
-public interface UserMapper { 
-  User getUserById(Long id);
-  User getUserByUserName(String username);
+public interface UserMapper {
+    User getUserById(Long id);
+
+    User getUserByUserName(String username);
 }

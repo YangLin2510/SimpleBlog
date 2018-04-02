@@ -9,7 +9,7 @@ import lin.project.firstproject2018.bean.Comment;
 
 @Mapper
 public interface CommentMapper {
-	List<Comment> getCommentsByBlogId(Long id);
-	
-	Long seveComment(@Param("comment")Comment comment);
+    List<Comment> getCommentsByBlogId(Long id);
+
+    Long seveComment(@Param("comment") Comment comment);
 }

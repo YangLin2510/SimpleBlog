@@ -7,9 +7,9 @@
         <result property="tagName" column="TAG_NAME"></result>
         <result property="tagCode" column="TAG_CODE"></result>
     </resultMap>
-    
+
     <select id="getBlogTags" resultMap="blogTagResultSet">
-       SELECT * FROM tb_blog_tag
+        SELECT * FROM tb_blog_tag
     </select>
-   
+
 </mapper>

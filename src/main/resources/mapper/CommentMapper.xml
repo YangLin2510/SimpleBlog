@@ -13,52 +13,52 @@
     <select id="getCommentsByBlogId" resultMap="commentResultSet" parameterType="long">
         select * from tb_comment where BLOG_ID = #{id} order by DATETIME DESC
     </select>
-    
-     <insert id="seveComment" useGeneratedKeys="true">
-         INSERT INTO tb_comment (
-            <if test="comment.id != null">
-               ID,
-            </if>
-            <if test="comment.userId != null">
-               USER_ID,
-            </if>
-            <if test="comment.dateTime != null">
-               DATETIME,
-            </if>
-            <if test="comment.blogId != null">
-               BLOG_ID,
-            </if>
-            <if test="comment.parentCommentId != null">
-               PARENT_COMMENT_ID,
-            </if>
-            <if test="comment.comment != null">
-               COMMENT,
-            </if>
-            <if test="comment.userName != null">
-               USER_NAME
-            </if>
-         ) VALUES (
-            <if test="comment.id != null">
-               #{comment.id},
-            </if>
-            <if test="comment.userId != null">
-               #{comment.userId},
-            </if>
-            <if test="comment.dateTime != null">
-              #{comment.dateTime},
-            </if>
-            <if test="comment.blogId != null">
-              #{comment.blogId},
-            </if>
-            <if test="comment.parentCommentId != null">
-               #{comment.parentCommentId},
-            </if>
-            <if test="comment.comment != null">
-               #{comment.comment},
-            </if>
-            <if test="comment.userName != null">
-               #{comment.userName}
-            </if>
-         )
+
+    <insert id="seveComment" useGeneratedKeys="true">
+        INSERT INTO tb_comment (
+        <if test="comment.id != null">
+            ID,
+        </if>
+        <if test="comment.userId != null">
+            USER_ID,
+        </if>
+        <if test="comment.dateTime != null">
+            DATETIME,
+        </if>
+        <if test="comment.blogId != null">
+            BLOG_ID,
+        </if>
+        <if test="comment.parentCommentId != null">
+            PARENT_COMMENT_ID,
+        </if>
+        <if test="comment.comment != null">
+            COMMENT,
+        </if>
+        <if test="comment.userName != null">
+            USER_NAME
+        </if>
+        ) VALUES (
+        <if test="comment.id != null">
+            #{comment.id},
+        </if>
+        <if test="comment.userId != null">
+            #{comment.userId},
+        </if>
+        <if test="comment.dateTime != null">
+            #{comment.dateTime},
+        </if>
+        <if test="comment.blogId != null">
+            #{comment.blogId},
+        </if>
+        <if test="comment.parentCommentId != null">
+            #{comment.parentCommentId},
+        </if>
+        <if test="comment.comment != null">
+            #{comment.comment},
+        </if>
+        <if test="comment.userName != null">
+            #{comment.userName}
+        </if>
+        )
     </insert>
 </mapper>

@@ -8,6 +8,6 @@ import lin.project.firstproject2018.bean.BlogTag;
 
 @Mapper
 public interface BlogTagMapper {
-	List<BlogTag> getBlogTags();
+    List<BlogTag> getBlogTags();
 
 }

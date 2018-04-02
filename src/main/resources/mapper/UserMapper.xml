@@ -12,7 +12,7 @@
     <select id="getUserById" resultMap="userResultSet" parameterType="long">
         select * from tb_user where id = #{id}
     </select>
-    
+
     <select id="getUserByUserName" resultMap="userResultSet" parameterType="string">
         select * from tb_user where USER_NAME = #{username}
     </select>
