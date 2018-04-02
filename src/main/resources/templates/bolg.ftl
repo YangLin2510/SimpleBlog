@@ -179,6 +179,20 @@
                             <span style="float:right" class="small-font">${achive.blog_count}篇</span></li>
                     </#list>
                         <li class="list-group-item" style="text-align:center"><a href="#">展开</a></li>
+                         <#list blogMonthAchive as achive>
+                             <#if achive_index < 3>
+                             <li class="list-group-item"><a
+                                     href="/viewBolgsWithAuthor?blogAuthorId=${author.id}&month=${achive.month}">${achive.month}</a>
+                                 <span style="float:right" class="small-font">${achive.blog_count}篇</span></li>
+                             <#else >
+                              <li class="list-group-item" style="display: none"><a
+                                      href="/viewBolgsWithAuthor?blogAuthorId=${author.id}&month=${achive.month}">${achive.month}</a>
+                                  <span style="float:right;" class="small-font">${achive.blog_count}篇</span></li>
+                             </#if>
+                         </#list>
+                        <li class="list-group-item" style="text-align:center"><a href="#"
+                                                                                 onclick="displayFullAchive(this)">展开</a>
+                        </li>
                     </ul>
 
                 </div>
@@ -191,6 +205,10 @@
                         <li class="list-group-item"><a
                                 href="/blog?articalId=${recentBlog.id}">${recentBlog.title}</a> </span></li>
                     </#list>
+                          <#list recentBlogs as recentBlog>
+                              <li class="list-group-item"><a
+                                      href="/blog?articalId=${recentBlog.id}">${recentBlog.title}</a> </span></li>
+                          </#list>
                     </ul>
                 </div>
 
@@ -231,6 +249,22 @@
                         </#list>
                     </div>
                 </#list>
+                    <#list comments as commentModel>
+                        <div class="comment-content">
+                            <div><a href="#">${commentModel.comment.userName}</a>
+                                <span>${commentModel.comment.dateTime?datetime}</span> <span style="float:right"><a
+                                        href="#">回复</a> <span>${comments?size - commentModel_index}楼</span></span></div>
+                            <p>${commentModel.comment.comment}</p>
+                       
+                       <#list commentModel.commentReply as reply>
+                             <div class="comment-reply">
+                                 <div><a href="#">${reply.userName}</a> <span>${reply.dateTime?datetime}</span> <span
+                                         style="float:right"></span></div>
+                                 <p>${reply.comment}</p>
+                             </div>
+                       </#list>
+                        </div>
+                    </#list>
                 </div>
             </div>
         </div>
@@ -276,6 +310,24 @@
         $("#commentLimit").html(200);
     }
 
+
+    function displayFullAchive(obj) {
+        $('.user-artials li').css("display", "");
+        $(obj).parent().css("display", "none");//去掉展开按钮
+        return false;
+    }
+
+    $(function () {
+        $("#comment").keydown(function () {
+            comment = $("#comment").val();
+            commentlength = comment.length;
+            if (200 - commentlength >= 0) {
+                $("#commentLimit").html(200 - commentlength);
+            } else {
+                $("#comment").val(comment.substring(0, 200));
+            }
+        });
+    });
 </script>
 </body>
 </html>
