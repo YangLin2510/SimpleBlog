@@ -132,7 +132,7 @@
             <div class="col-2">
                 <div class="menu-item">内容</div>
                 <ul class="blog-cate">
-                    <li><a href="#" class="active">文章管理</a></li>
+                    <li><a href="manager_blog" class="active">文章管理</a></li>
                     <li><a href="#">评论管理</a></li>
                 </ul>
             </div>
