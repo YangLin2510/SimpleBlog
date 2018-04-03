@@ -37,7 +37,8 @@
         }
 
         #editor_container {
-            margin-top: 32px;
+            background-color: #fff;
+            border-left: 1px solid #e9e9e9;
         }
 
         #cate {
@@ -97,6 +98,7 @@
         }
         .title {
             border-left: 4px solid #F44444;
+            margin-top: 8px;
             padding-left: 8px;
         }
 
@@ -132,6 +134,7 @@
         .manager_blog span {
             padding-right: 16px;
             font-size: small;
+            color: #999;
         }
         .manager_blog a {
             text-decoration: none;
@@ -142,13 +145,24 @@
             text-decoration: none;
             color: #de686d;
         }
-
+        .manager_blog_op {
+            float: right;
+        }
+        .manager_blog_op a {
+            font-size: small;
+            padding: 0 8px;
+            color: #999;
+            text-decoration: none;
+        }
+        .manager_blog_op a:hover {
+            color: #de686d;
+        }
 
     </style>
     <!-- bootstrap-wysihtml5    HTML5 所见即所得编辑器-->
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" style="background-color: #f4f4f4;min-height: 1000px;">
 
     <div class="row" id="cate">
         <div class="col">
@@ -173,13 +187,10 @@
 
     </div>
 
-    <div class="container">
-
-        <h3>编辑博客</h3>
-
+    <div class="container" style="margin-top: 32px;">
 
         <div class="row">
-            <div class="col-2">
+            <div class="col-2" style="background-color: #fff;padding: 0px;">
                 <div class="menu-item">内容</div>
                 <ul class="blog-cate">
                     <li><a href="manage_blog" class="active">文章管理</a></li>
@@ -197,19 +208,22 @@
 
                 <div class="manager_blog">
                     <a href="#">简单博客网站的开发</a>
-                    <div><span>原创</span><span>2017年4月2日 21:49:01</span><span>31</span><span><i class="fa fa-comment-o" style="margin-right: 4px"></i>0</span></div>
+                    <div>
+                        <span>原创</span><span>2017年4月2日 21:49:01</span><span>阅读:31</span><span><i class="fa fa-comment-o" style="margin-right: 4px"></i>0</span>
+                        <span class="manager_blog_op">
+                            <a href="#">查看</a>|<a href="#">删除</a>|<a href="#">置顶</a>|<a href="#">禁止评论</a>
+                        </span>
+                    </div>
                 </div>
                 <div class="manager_blog">
                     <a href="#">简单博客网站的开发</a>
-                    <div><span>原创</span><span>2017年4月2日 21:49:01</span><span>31</span><span><i class="fa fa-comment-o" style="margin-right: 4px"></i>0</span></div>
+                    <div>
+                        <span>原创</span><span>2017年4月2日 21:49:01</span><span>阅读:31</span><span><i class="fa fa-comment-o" style="margin-right: 4px"></i>0</span>
+                        <span class="manager_blog_op">
+                            <a href="#">查看</a>|<a href="#">删除</a>|<a href="#">置顶</a>|<a href="#">禁止评论</a>
+                        </span>
+                    </div>
                 </div>
-
-                <div class="manager_blog">
-                    <a href="#">简单博客网站的开发</a>
-                    <div><span>原创</span><span>2017年4月2日 21:49:01</span><span>31</span><span><i class="fa fa-comment-o" style="margin-right: 4px"></i>0</span></div>
-                </div>
-
-
             </div>
         </div>
     </div>
