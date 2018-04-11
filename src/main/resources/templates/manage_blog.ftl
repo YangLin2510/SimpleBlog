@@ -20,11 +20,7 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
-    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
-    <script src="bootstrap-wysiwyg-master/external/jquery.hotkeys.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-    <script src="bootstrap-wysiwyg-master/external/google-code-prettify/prettify.js"></script>
-    <script src="bootstrap-wysiwyg-master/bootstrap-wysiwyg.js"></script>
+
 
 
     <style>
@@ -201,32 +197,63 @@
                 <p class="title">文章管理</p>
                 <div style="border-bottom: 1px solid #e9e9e9 ">
                     <ul class="blog_manager_cates">
-                        <li><a href="#" class="cate_active">全部(1)</a></li>
-                        <li><a href="#">回收站(1)</a></li>
+                        <#if status == '0'>
+                            <li><a href="/manager_blog?userId=${userId}&blogStatus=0" class="cate_active">全部(${blogPage.total})</a></li>
+                            <#else >
+                            <li><a href="/manager_blog?userId=${userId}&blogStatus=0">全部</a></li>
+                        </#if>
+                        <#if status == '1'>
+                            <li><a href="/manager_blog?userId=${userId}&blogStatus=1" class="cate_active">回收站(${blogPage.total})</a></li>
+                            <#else>
+                            <li><a href="/manager_blog?userId=${userId}&blogStatus=1">回收站</a></li>
+                        </#if>
                     </ul>
                 </div>
 
-                <div class="manager_blog">
-                    <a href="#">简单博客网站的开发</a>
-                    <div>
-                        <span>原创</span><span>2017年4月2日 21:49:01</span><span>阅读:31</span><span><i class="fa fa-comment-o" style="margin-right: 4px"></i>0</span>
-                        <span class="manager_blog_op">
-                            <a href="#">查看</a>|<a href="#">删除</a>|<a href="#">置顶</a>|<a href="#">禁止评论</a>
-                        </span>
-                    </div>
-                </div>
-                <div class="manager_blog">
-                    <a href="#">简单博客网站的开发</a>
-                    <div>
-                        <span>原创</span><span>2017年4月2日 21:49:01</span><span>阅读:31</span><span><i class="fa fa-comment-o" style="margin-right: 4px"></i>0</span>
-                        <span class="manager_blog_op">
-                            <a href="#">查看</a>|<a href="#">删除</a>|<a href="#">置顶</a>|<a href="#">禁止评论</a>
-                        </span>
-                    </div>
-                </div>
+                <#list blogPage.getList() as blog>
+                   <div class="manager_blog">
+                       <a href="/blog?articalId=${blog.id}">${blog.title}</a>
+                       <div>
+                           <span><#if blog.blogType??>${blog.blogType}<#else >原创</#if></span><span>${blog.createTime?string("yyyy年MM月dd日 hh:mm:ss")}</span><span>阅读:${blog.viewCount}</span><span><i class="fa fa-comment-o" style="margin-right: 4px"></i>${blog.commentCount}</span>
+                           <span class="manager_blog_op">
+                               <#if status =='0'>
+                                   <a href="/blog?articalId=${blog.id}">查看</a>|<a href="#" onclick="javascript:return del(${blog.id})" style="color: #CA0C16">删除</a>|<a href="#">置顶</a>|<a href="#">禁止评论</a>
+                                   <#elseif status=='1'>
+                                   <a href="/blog?articalId=${blog.id}">查看</a>|<a href="#" style="color: #CA0C16" onclick="javascript:return del(${blog.id})">删除</a>|<a href="#">恢复</a></a>
+                               </#if>
+                           </span>
+                       </div>
+                   </div>
+                </#list>
             </div>
         </div>
     </div>
 </div>
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="bootstrap-wysiwyg-master/external/jquery.hotkeys.js"></script>
+<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+<script src="bootstrap-wysiwyg-master/external/google-code-prettify/prettify.js"></script>
+<script src="bootstrap-wysiwyg-master/bootstrap-wysiwyg.js"></script>
+<script>
+    
+    function del(id) {
+        var msg = "确定要删除这条博客吗?";
+        if(confirm(msg)===true){
+            //ajax删除 & 重新加载页面
+            $.ajax({
+               url:"/delBlog",
+               data:{"blogId":id},
+               success:function (data) {
+                   if(data==='success'){
+                       document.location.reload();//重新加载页面
+                   }else if(data==='fail'){
+                       alert("删除失败!");
+                   }
+               }
+            });
+        }
+        return false;
+    }
+</script>
 </body>
 </html>

@@ -186,4 +186,40 @@ public class BolgController {
         return blog;
     }
 
+    /**
+     *
+     * @param blogStatus 博客的状态 all:全部 waitDel:回收站
+     * @param userId 用户ID
+     * @param startPage 第几页
+     * @param pageSize 页面大小
+     * @return
+     */
+    @RequestMapping("/manager_blog")
+    public String toManagerBlog(String blogStatus,Long userId,Integer startPage,Integer pageSize,Model model){
+        pageSize = pageSize==null?10:pageSize;
+        startPage = startPage==null?1:startPage;
+        blogStatus = blogStatus==null?BlogStatus.DEFAULT.toString():blogStatus;
+        if (userId==null) throw new IllegalArgumentException("用户编码参数不能为空");
+        Blog queryObj = new Blog();
+        queryObj.setAuthorUserId(userId);
+        queryObj.setStatus(blogStatus);
+        List<Blog> blogs = blogService.getBlogsWithPage(queryObj,startPage,pageSize,null,null,null);
+        PageInfo<Blog> blogPage = new PageInfo<Blog>(blogs);
+        model.addAttribute("blogPage",blogPage);
+        model.addAttribute("status",blogStatus);
+        model.addAttribute("userId",userId);
+        return "manage_blog";
+    }
+
+
+    @RequestMapping("/delBlog")
+    @ResponseBody
+    public String delBlog(Long blogId){
+        try {
+            blogService.deleteBlog(blogId);
+        } catch (Exception e) {
+            return "fail";
+        }
+        return "success";
+    }
 }

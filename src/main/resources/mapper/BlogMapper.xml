@@ -12,6 +12,7 @@
         <result property="viewCount" column="VIEW_COUNT"></result>
         <result property="commentCount" column="COMMENT_COUNT"></result>
         <result property="blogTagCode" column="BLOG_TAG_CODE"/>
+        <result property="blogType" column="BLOG_TYPE"/>
     </resultMap>
 
     <resultMap id="blogModelResultSet" type="lin.project.firstproject2018.model.BlogModel">
@@ -43,6 +44,9 @@
         </if>
         <if test="month !=null and month != ''">
             and date_format(CREATE_TIME,"%Y-%m") = #{month}
+        </if>
+        <if test="queryBlog.status != null and queryBlog.status !=''">
+            and STATUS = #{queryBlog.status}
         </if>
         ORDER BY CREATE_TIME DESC
     </select>
@@ -118,5 +122,9 @@
         </set>
         WHERE ID = #{id}
     </update>
+
+    <delete id="deleteBlog">
+        DELETE FROM tb_blog WHERE ID = #{id}
+    </delete>
 
 </mapper>

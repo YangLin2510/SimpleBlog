@@ -13,12 +13,19 @@ public class Blog {
     private Integer commentCount;
     private String blogTagCode;
     private String blogType;
+    private String status;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getBlogTagCode() {
         return blogTagCode;
     }
-
     public void setBlogTagCode(String blogTagCode) {
         this.blogTagCode = blogTagCode;
     }

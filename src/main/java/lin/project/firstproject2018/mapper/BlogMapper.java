@@ -26,4 +26,5 @@ public interface BlogMapper {
     List<BlogModel> getBlogsByViewCountWithPage(@Param("tagCode") String tagCode);
 
     void updateBlog(Blog blog);
+    void deleteBlog(Long id);
 }

@@ -76,8 +76,8 @@ public class BolgService {
         return cs;
     }
 
-    public List<Blog> getBlogsWithPage(Blog queryBlog, int startPage, int pageNum, Date startDate, Date endDate, String month) {
-        PageHelper.startPage(startPage, pageNum);
+    public List<Blog> getBlogsWithPage(Blog queryBlog, int startPage, int pageSize, Date startDate, Date endDate, String month) {
+        PageHelper.startPage(startPage, pageSize);
         List<Blog> blogList = blogMapper.getBlogsWithPage(queryBlog, month);
         return blogList;
     }
@@ -122,4 +122,8 @@ public class BolgService {
         return blogTagMapper.getBlogTags();
     }
 
+    public void deleteBlog(Long blogId){
+        if(blogId == null) throw new IllegalArgumentException("blogId 不能为空");
+        blogMapper.deleteBlog(blogId);
+    }
 }
